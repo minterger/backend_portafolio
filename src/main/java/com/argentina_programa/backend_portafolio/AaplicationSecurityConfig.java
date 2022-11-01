@@ -61,6 +61,8 @@ public class AaplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic();
 
+        http.cors();
+
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
