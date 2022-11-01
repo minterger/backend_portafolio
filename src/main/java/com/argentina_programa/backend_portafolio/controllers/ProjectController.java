@@ -37,7 +37,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProject(@RequestBody Project projectBody, @PathVariable Long id) {
+    public ResponseEntity<Project> getProject(@PathVariable Long id) {
         Project project = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("El Proyecto no fue encontrado"));
         return ResponseEntity.ok(project);
