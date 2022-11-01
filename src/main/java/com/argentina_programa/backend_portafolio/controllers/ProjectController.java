@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,15 +36,15 @@ public class ProjectController {
         return repositorio.save(project);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Project> getProject(@RequestBody Project projectBody, Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Project> getProject(@RequestBody Project projectBody, @PathVariable Long id) {
         Project project = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("El Proyecto no fue encontrado"));
         return ResponseEntity.ok(project);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> ediProject(@RequestBody Project projectBody, Long id) {
+    public ResponseEntity<Project> editProject(@RequestBody Project projectBody, @PathVariable Long id) {
         Project project = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("El Proyecto no fue encontrado"));
 
@@ -59,8 +60,8 @@ public class ProjectController {
         return ResponseEntity.ok(responseProject);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Map<String, Boolean>> deleteProject(Long id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<Map<String, Boolean>> deleteProject(@PathVariable Long id) {
         Project project = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("El Proyecto no fue encontrado"));
 
