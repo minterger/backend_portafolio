@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,11 +32,13 @@ public class ProjectController {
         return repositorio.findAll();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Project newProject(@RequestBody Project project) {
         return repositorio.save(project);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Project> getProject(@PathVariable Long id) {
         Project project = repositorio.findById(id)
@@ -43,6 +46,7 @@ public class ProjectController {
         return ResponseEntity.ok(project);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Project> editProject(@RequestBody Project projectBody, @PathVariable Long id) {
         Project project = repositorio.findById(id)
@@ -60,6 +64,7 @@ public class ProjectController {
         return ResponseEntity.ok(responseProject);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<Map<String, Boolean>> deleteProject(@PathVariable Long id) {
         Project project = repositorio.findById(id)

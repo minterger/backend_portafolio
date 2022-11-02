@@ -2,6 +2,7 @@ package com.argentina_programa.backend_portafolio.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,11 +36,13 @@ public class SkillController {
         return repository.findByType("lenguaje");
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Skill newSkill(@RequestBody Skill skill) {
         return repository.save(skill);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Skill> getSkill(@PathVariable Long id) {
         Skill skill = repository.findById(id)
@@ -47,6 +50,7 @@ public class SkillController {
         return ResponseEntity.ok(skill);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Skill> editSkill(@RequestBody Skill bodySkill, @PathVariable Long id) {
         Skill skill = repository.findById(id)
@@ -60,6 +64,7 @@ public class SkillController {
         return ResponseEntity.ok(responseSkill);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteSkill(@PathVariable Long id) {
         Skill skill = repository.findById(id)
