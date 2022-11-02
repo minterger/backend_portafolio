@@ -40,6 +40,7 @@ public class MainSecurity {
                 .antMatchers("/skill/lenguaje").permitAll()
                 .antMatchers("/project").permitAll()
                 .antMatchers("/study").permitAll()
+                .antMatchers("/").permitAll()
                 .antMatchers("/auth/**")
                 .permitAll()
                 .anyRequest().authenticated()
